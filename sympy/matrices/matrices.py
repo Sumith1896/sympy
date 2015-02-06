@@ -2750,7 +2750,6 @@ class MatrixBase(object):
                         basis[basiskey.index(j)][i, 0] = -v
         return [self._new(b) for b in basis]
 
-
     def columnspace(self, simplify=False):
         """Returns list of vectors (Matrix objects) that span nullspace of self
         """
