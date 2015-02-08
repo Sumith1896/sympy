@@ -2766,7 +2766,7 @@ class MatrixBase(object):
         cur =  0
         for i in range(self.cols):
             if i in pivots:
-                basis[i] = self[:, i]
+                basis[cur] = self.col(i)
                 cur += 1
         return [self._new(b) for b in basis]
 

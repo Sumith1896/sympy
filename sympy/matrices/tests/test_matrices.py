@@ -746,6 +746,31 @@ def test_nullspace():
     assert M.nullspace()
 
 
+def test_columnspace():
+	
+    M = Matrix([[ 1,  2,  0,  2,  5],
+                [-2, -5,  1, -1, -8],
+                [ 0, -3,  3,  4,  1],
+                [ 3,  6,  0, -7,  2]])
+
+    # now check the vectors
+    basis = M.columnspace()
+    assert basis[0] == Matrix([1, -2, 0, 3])
+    assert basis[1] == Matrix([2, -5, -3, 6])
+    assert basis[2] == Matrix([2, -1, 4, -7])
+
+    #check by columnspace definition
+    a, b, c, d, e = symbols('a b c d e')
+    X = Matrix([a, b, c, d, e])
+
+    for i in range(len(basis)):
+        assert len(solve(Eq(M*X, basis[i]))) != 0
+	
+    #check if rank-nullity theorem holds
+    assert M.rank() == len(basis)
+    assert len(M.nullspace()) + len(M.columnspace()) == M.cols 
+
+
 def test_wronskian():
     assert wronskian([cos(x), sin(x)], x) == cos(x)**2 + sin(x)**2
     assert wronskian([exp(x), exp(2*x)], x) == exp(3*x)
